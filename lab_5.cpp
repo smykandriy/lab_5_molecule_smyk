@@ -1,39 +1,40 @@
 #include <iostream>
+#include <vector>
+#include <iterator>
+#include <algorithm>
 #include "molecule.h"
 #include "calc.h"
-using namespace std;
 
 int main() {
-
-    Molecule obj1;
-    obj1.setMolecule("Carbonic acid");
-    const int len = 6;
-    Atom atom[len];
-    atom[0].H();
-    atom[5].H();
-    atom[4].C();
-    atom[3].O();
-    atom[2].O();
-    atom[1].O();
-
-    cout << "Before sorting:" << endl << "Molecule: " << obj1.moleculeName << endl << endl;
-    cout << "Atoms:" << endl;
-    for (int i = 0; i < len; i++) {
-        cout << atom[i].name << "\tAtomic mass: " << atom[i].atomicMass << endl;
+    Molecule obj;
+    obj.setMolecule("Carbonic Acid");
+    
+    const int kAtomsCount = 6;
+    vector<Atom> atoms_vector;
+    for (int index = 0; index < kAtomsCount; index++) {
+        Atom atom;
+        atoms_vector.push_back(atom);
     }
 
-    sortAtom(&atom[0], len);
-    
+    atoms_vector[0].Hydrogen();
+    atoms_vector[5].Hydrogen();
+    atoms_vector[4].Carbon();
+    atoms_vector[3].Oxygen();
+    atoms_vector[2].Oxygen();
+    atoms_vector[1].Oxygen();
 
-    cout << endl << "After sorting:" << endl << "Molecule: " << obj1.moleculeName << endl << endl;
+    cout << "Before sorting:" << endl << "Molecule: " << obj.getMoleculeName() << endl << endl;
     cout << "Atoms:" << endl;
-    for (int i = 0; i < len; i++) {
-        cout << atom[i].name << "\tAtomic mass: " << atom[i].atomicMass << endl;
-    }
-    
+    PrintVector(atoms_vector);
+
+    sort(atoms_vector.begin(), atoms_vector.end(), sortRuleLambda);
+
+    cout << endl << "After sorting:" << endl << "Molecule: " << obj.getMoleculeName() << endl << endl;
+    cout << "Atoms:" << endl;
+    PrintVector(atoms_vector);
+
     cout << endl << "Average atomic mass: ";
-    cout << averageMass(&atom[0], len) << endl;
-
+    cout << AverageMass(atoms_vector) << endl;
 
     return 0;
 }
