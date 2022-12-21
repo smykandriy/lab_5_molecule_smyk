@@ -1,22 +1,29 @@
 #pragma once
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class Molecule {
-    public:
-    string moleculeName;
-    void setMolecule(string mn) {
-        moleculeName = mn;
+  private:
+
+    string molecule_name;
+  public:
+
+    void setMolecule(string input_molecule_name) {
+        molecule_name = input_molecule_name;
+    }
+
+    string getMoleculeName() {
+        return molecule_name;
     }
 };
 
 class Atom: public Molecule {
-    public:
+  private:
+
     string name;
-    float atomicMass;
+    double atomic_mass;
     int neutron, proton, electron;
-    friend float avgMass(Atom arr[], int len);
-    friend void sortAtom(Atom arr[], int len);
 
     enum type {
         ISOTYPE,
@@ -25,31 +32,47 @@ class Atom: public Molecule {
         ANTIMATTER,
         STABLE
     };
-    void H() {
-        name = "Hydrogen";
-        atomicMass = 1.008;
-        neutron = 0;
-        proton = 1;
-        electron = 1;
+  public:
+
+    double getAtomicMass() const {
+        return atomic_mass;
     }
-    void C() {
-        name = "Carbon";
-        atomicMass = 12.01;
-        neutron = 6;
-        proton = 6;
-        electron = 6;
+    string getName() {
+        return name;
     }
-    void O() {
-        name = "Oxygen";
-        atomicMass = 15.99;
-        neutron = 8;
-        proton = 8;
-        electron = 8;
+
+    Atom() {
+        this->name = "Hydrogen";
+        this->atomic_mass = 1.008;
+        this->neutron = 0;
+        this->proton = 1;
+        this->electron = 1;
     }
-    bool isNeutral() {
+
+    void Hydrogen() {
+        this->name = "Hydrogen";
+        this->atomic_mass = 1.008;
+        this->neutron = 0;
+        this->proton = 1;
+        this->electron = 1;
+    }
+    void Carbon() {
+        this->name = "Carbon";
+        this->atomic_mass = 12.01;
+        this->neutron = 6;
+        this->proton = 6;
+        this->electron = 6;
+    }
+    void Oxygen() {
+        this->name = "Oxygen";
+        this->atomic_mass = 15.99;
+        this->neutron = 8;
+        this->proton = 8;
+        this->electron = 8;
+    }
+
+    bool IsNeutral() {
         return (neutron == proton) ? true: false;
     }
-    ~Atom() {
-        cout << endl << name << " destructed";
-    }
+    friend void PrintVector(vector <Atom> vect);
 };
