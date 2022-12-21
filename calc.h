@@ -3,29 +3,23 @@
 #include <iostream>
 using namespace std;
 
-void sortAtom(Atom arr[], int len) {
-    int i, j;
-    for (i = 0; i < len; i++) {
-        for (j = i+1; j < len; j++) {
-            if (arr[j].atomicMass < arr[i].atomicMass) {
-                arr[len+1] = arr[i];
-                arr[i] = arr[j];
-                arr[j] = arr[len+1];
-            }
-        }
+void PrintVector(vector <Atom> vect) {
+    for (Atom obj : vect) {
+        cout << obj.getName() << "\tAtomic mass: " << obj.getAtomicMass() << endl;
     }
 }
 
-inline float averageMass(Atom arr[], int len) {
-    int i, count = 0;
-    Atom *ptr = 0;
-    float sum = 0; 
-    float average = 0;
-    for (i = 0; i < len; i++) {
-        ptr = &arr[i];
-        sum += ptr->atomicMass;
-        count++;
+double AverageMass(vector <Atom> vect) {
+    double average, sum;
+    for (Atom obj : vect) {
+        sum += obj.getAtomicMass();
     }
-    average = sum / count;
+    average = sum / vect.size();
     return average;
 }
+
+//lambda definition for sorting
+auto sortRuleLambda = [] (Atom const& atom_left, Atom const& atom_right) -> bool
+    {
+       return atom_left.getAtomicMass() < atom_right.getAtomicMass();
+    };
